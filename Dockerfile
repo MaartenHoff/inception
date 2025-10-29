@@ -1,6 +1,7 @@
-FROM nginx:alpine
+FROM php:8.2-fpm-alpine
 
-# COPY not needed since its the index.html
-# is copied via the volume in docker-compose.yml
+# PHP-MySQL Erweiterung installieren
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-#COPY index.html /usr/share/nginx/html/index.html
+COPY app /var/www/html
+EXPOSE 9000

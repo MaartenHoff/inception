@@ -1,12 +1,31 @@
-services:
-  nginx:
-    build: .
-    container_name: nginx-proto
-    ports:
-      - "8443:80"
-    volumes:
-      - ./index.html:/usr/share/nginx/html/index.html
+version: "3.8"
 
-  backend:
-    image: httpd:alpine
-    container_name: backend-proto
+services:
+  web:
+    build: .
+    # ports:
+    #   - "8080:80"
+    depends_on:
+      - db
+    image: php:8.2-fpm
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/var/www/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - web
+
+  db:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdb
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
