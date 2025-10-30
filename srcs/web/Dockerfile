@@ -1,7 +1,8 @@
 FROM php:8.2-fpm-alpine
 
-# PHP-MySQL Erweiterung installieren
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+WORKDIR /var/www/html
 
-COPY app /var/www/html
+COPY ./index.php .
+
 EXPOSE 9000
+CMD ["php-fpm"]
