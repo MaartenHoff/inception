@@ -1,13 +1,8 @@
 services:
-  db:
-    build: ./db
-    container_name: inception-db
+  mariadb:
+    container_name: inception-mariadb
+    build: ./requirements/mariadb
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: testdb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: pass
     ports:
       - "3306:3306"
     networks:
@@ -15,28 +10,27 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
-  web:
-    build: ./web
-    container_name: inception-web
+  wordpress:
+    build: ./requirements/wordpress
+    container_name: inception-wordpress
     restart: always
     depends_on:
-      - db
+      - mariadb
     volumes:
-      - ./web:/var/www/html
+      - ./wordpress:/var/www/html
     networks:
       - inception-net
 
   nginx:
-    build: ./nginx
+    build: ./requirements/nginx
     container_name: inception_nginx
     restart: always
     ports:
-      - "8080:80"
       - "8443:443"
     depends_on:
-      - web
+      - wordpress
     volumes:
-      - ./web:/var/www/html
+      - ./wordpress:/var/www/html
     networks:
       - inception-net
 
