@@ -13,7 +13,6 @@ COPY conf/db.cnf /etc/mysql/mariadb.conf.d/
 COPY 	tools/setup.sh /bin/
 RUN		chmod +x /bin/setup.sh
 
-# listen to port 3306
 EXPOSE 3306
 
 # execute script ("setup.sh") and start database server ("mysqld_safe")
