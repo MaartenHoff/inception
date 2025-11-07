@@ -17,8 +17,7 @@ RUN	service php7.4-fpm stop
 
 # change settings in php (sed -i -> search and replace): 
 # no guessing, only accept exact filenames, 
-RUN	sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${PHPPATH}/php.ini&& \
-	sed -i "s/listen = \/run\/php\/php$PHP_VERSION_ENV-fpm.sock/listen = 9000/g" ${PHPPATH}/pool.d/www.conf
+RUN	sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${PHPPATH}/php.ini
 
 # install wp-cli (WordPress Command-Line Interface), give permissions, move and rename (wp)
 RUN wget --no-check-certificate https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
