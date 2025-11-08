@@ -8,8 +8,8 @@ COPY ssl /etc/nginx/ssl
 COPY conf/nginx.conf /etc/nginx/http.d/
 
 # NGINX Verzeichnis erstellen
-RUN mkdir -p /var/www/html && \
-    chown -R nginx:nginx /var/www/html
+RUN mkdir -p /var/www/inception && \
+    chown -R nginx:nginx /var/www/inception
 
 # Rechte setzen (sonst 403-Fehler)
 RUN chmod 600 /etc/nginx/ssl/localhost.key && \
