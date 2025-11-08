@@ -1,15 +1,7 @@
 FROM debian:bullseye
 
-# temp var move to .env later
-ARG SSL_PATH=/etc/nginx/ssl
-ARG SSL_CERT=${SSL_PATH}/inception.crt
-ARG SSL_KEY=${SSL_PATH}/inception.key
-ARG	COUNTRY=DE
-ARG	STATE=BE
-ARG	LOCALITY=Berlin
-ARG	ORGANIZATION=42
-ARG	UNIT=42
-ARG	COMMON_NAME=maahoff.42.fr
+# 
+ARG	SSL_PATH SSL_CERT SSL_KEY COUNTRY STATE LOCALITY ORGANIZATION UNIT COMMON_NAME
 
 # update & install nginx and openssl (with no unnecessary packages) and clean apt cache
 RUN apt update && apt install -y --no-install-recommends --no-install-suggests \

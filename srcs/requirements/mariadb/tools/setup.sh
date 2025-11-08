@@ -2,12 +2,6 @@
 
 service mariadb start
 
-# temp enviromental var (later in .env)
-DB_NAME=thedatabase
-DB_USER=theuser
-DB_PASSWORD=abc
-DB_PASS_ROOT=123
-
 # creates the database with users and their passwords + permissions
 # -v (verbose, share more info), -u root (start in root) = start shell
 # '@'% (@ everyone), '$DB_USER'@'%' User that can connect to any host
