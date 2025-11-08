@@ -40,26 +40,3 @@ EXPOSE 443
 
 # NGINX starten
 CMD ["nginx", "-g", "daemon off;"]
-
-# FROM alpine:3.18
-
-# # NGINX installieren
-# RUN apk update && apk add nginx
-
-# # Zertifikate  und konfig ins Image kopieren
-# COPY ssl /etc/nginx/ssl
-# COPY conf/nginx.conf /etc/nginx/http.d/
-
-# # NGINX Verzeichnis erstellen
-# RUN mkdir -p /var/www/inception && \
-#     chown -R nginx:nginx /var/www/inception
-
-# # Rechte setzen (sonst 403-Fehler)
-# RUN chmod 600 /etc/nginx/ssl/localhost.key && \
-#     chmod 644 /etc/nginx/ssl/localhost.crt
-
-# # Port freigeben
-# EXPOSE 443 80
-
-# # NGINX starten
-# CMD ["nginx", "-g", "daemon off;"]

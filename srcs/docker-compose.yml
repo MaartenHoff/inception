@@ -8,7 +8,9 @@ services:
     networks:
       - inception-net
     volumes:
-      - db_data:/var/lib/mysql
+      - ~/inception_data/db_files:/var/lib/mysql
+    env_file:
+      - .env
 
   wordpress:
     build: ./requirements/wordpress
@@ -17,25 +19,41 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - ./requirements/wordpress:/var/www/inception
+      - ~/inception_data/wp_files:/var/www/inception
     networks:
       - inception-net
+    env_file:
+      - .env
 
   nginx:
     build: ./requirements/nginx
     container_name: inception_nginx
     restart: always
     ports:
-      - "8443:443"
+      - "443:443"
     depends_on:
       - wordpress
     volumes:
-      - ./requirements/wordpress:/var/www/inception
+      - ~/inception_data/wp_files:/var/www/inception
     networks:
       - inception-net
+    env_file:
+      - .env
 
 volumes:
-  db_data:
+  database:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ~/data/database
+
+  wordpress_files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ~/data/wordpress_fileses
 
 networks:
   inception-net:
