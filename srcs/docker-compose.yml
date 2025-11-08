@@ -26,7 +26,18 @@ services:
       - .env
 
   nginx:
-    build: ./requirements/nginx
+    build:
+      context: ./requirements/nginx/
+      args:
+        SSL_PATH: ${SSL_PATH}
+        SSL_CERT: ${SSL_CERT}
+        SSL_KEY: ${SSL_KEY}
+        COUNTRY: ${COUNTRY}
+        STATE: ${STATE}
+        LOCALITY: ${LOCALITY}
+        ORGANIZATION: ${ORGANIZATION}
+        UNIT: ${UNIT}
+        COMMON_NAME: ${COMMON_NAME}
     container_name: inception_nginx
     restart: always
     ports:
@@ -39,21 +50,6 @@ services:
       - inception-net
     env_file:
       - .env
-
-volumes:
-  database:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ~/data/database
-
-  wordpress_files:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ~/data/wordpress_fileses
 
 networks:
   inception-net:
