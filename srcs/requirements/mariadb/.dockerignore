@@ -1,0 +1,11 @@
+# Git-Verzeichnis, das riesig sein kann
+.git/
+
+# VSCode-Einstellungen
+.vscode/
+
+# Dein Makefile (gehört nicht in das Image)
+Makefile
+
+# Deine .env-Datei (SUPER WICHTIG!)
+.env

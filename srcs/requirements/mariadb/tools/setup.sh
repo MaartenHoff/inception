@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# FIX: Change ownership of the data directory and socket folder to the mysql user 
+# chown -R mysql:mysql /var/lib/mysql
+# mkdir -p /run/mysqld
+# chown -R mysql:mysql /run/mysqld
+
+# mkdir -p /var/log/mysql
+# chown -R mysql:mysql /var/log/mysql
+
+# echo "permissions given"
+
 service mariadb start
 
 # creates the database with users and their passwords + permissions

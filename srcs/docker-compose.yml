@@ -1,6 +1,7 @@
 services:
   mariadb:
-    container_name: inception-mariadb
+    image: mariadb
+    container_name: mariadb
     build: ./requirements/mariadb
     restart: always
     ports:
@@ -8,24 +9,26 @@ services:
     networks:
       - inception-net
     volumes:
-      - ~/inception_data/db_files:/var/lib/mysql
+      - ~/data/db_files:/var/lib/mysql
     env_file:
       - .env
 
   wordpress:
+    image: wordpress
     build: ./requirements/wordpress
-    container_name: inception-wordpress
+    container_name: wordpress
     restart: always
     depends_on:
       - mariadb
     volumes:
-      - ~/inception_data/wp_files:/var/www/inception
+      - ~/data/wp_files:/var/www/inception
     networks:
       - inception-net
     env_file:
       - .env
 
   nginx:
+    image: nginx
     build:
       context: ./requirements/nginx/
       args:
@@ -38,14 +41,14 @@ services:
         ORGANIZATION: ${ORGANIZATION}
         UNIT: ${UNIT}
         COMMON_NAME: ${COMMON_NAME}
-    container_name: inception_nginx
+    container_name: nginx
     restart: always
     ports:
       - "443:443"
     depends_on:
       - wordpress
     volumes:
-      - ~/inception_data/wp_files:/var/www/inception
+      - ~/data/wp_files:/var/www/inception
     networks:
       - inception-net
     env_file:
