@@ -17,6 +17,9 @@ clean:
 	sudo rm -rf ~/data/db_files/*
 	sudo rm -rf ~/data/wp_files/*
 
+fclean: clean
+    docker compose -p $(NAME) down --rmi all
+
 all: up
 
 .PHONY: up down
