@@ -35,5 +35,7 @@ if ! wp --allow-root --path="/var/www/inception/" user get $WP_USER; then
 		--role=$WP_ROLE
 fi
 
+chown -R www-data:www-data /var/www/inception/*
+
 # start php server (foreground)
 exec $@

@@ -18,7 +18,7 @@ clean:
 	sudo rm -rf ~/data/wp_files/*
 
 fclean: clean
-    docker compose -p $(NAME) down --rmi all
+	docker compose -p $(NAME) down --rmi all
 
 all: up
 
