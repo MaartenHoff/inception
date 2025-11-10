@@ -1,16 +1,28 @@
 #!/bin/bash
 
 # FIX: Change ownership of the data directory and socket folder to the mysql user 
-# chown -R mysql:mysql /var/lib/mysql
-# mkdir -p /run/mysqld
-# chown -R mysql:mysql /run/mysqld
+chown -R mysql:mysql /var/lib/mysql
+mkdir -p /run/mysqld
+chown -R mysql:mysql /run/mysqld
 
-# mkdir -p /var/log/mysql
-# chown -R mysql:mysql /var/log/mysql
+echo "ownership given"
 
-# echo "permissions given"
+if [ ! -d /var/lib/mysql/mysql ]; then
+    echo "Database not found. Initializing..."
+    
+    # 'mariadb-install-db' erstellt die Basis-Datenbankstruktur
+    mariadb-install-db --user=mysql --datadir=/var/lib/mysql
+    
+    echo "Database initialized."
+else
+    echo "Database already exists. Skipping initialization."
+fi
 
 service mariadb start
+
+sleep 3
+
+echo "Executing SQL commands..."
 
 # creates the database with users and their passwords + permissions
 # -v (verbose, share more info), -u root (start in root) = start shell
@@ -26,8 +38,9 @@ EOF
 
 # stop the server (sleep to prevent errors right before stopping the server, 
 # 		since script might be faster then running the commands)
-sleep 5
+sleep 1
 service mariadb stop
+echo "Setup complete. Starting server in foreground."
 
 # restart the server
 exec $@
